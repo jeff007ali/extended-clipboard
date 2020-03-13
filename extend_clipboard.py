@@ -83,8 +83,8 @@ def paste_text():
     paste_flag = True
     print("actual paste : {}".format(read_clipboard_data()))
     if not injected:
-        # pass
-        select_text(read_clipboard_data())
+        pass
+        # select_text(read_clipboard_data())
 
 def manual_paste():
     # kb = Controller()
@@ -96,7 +96,7 @@ def manual_paste():
     kb.release('v')
     kb.release(Key.ctrl)
     # time.sleep(0.05)
-    select_text(read_clipboard_data())
+    # select_text(read_clipboard_data())
     print("END manual paste")
 
 def paste_previous_text():

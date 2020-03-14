@@ -68,6 +68,8 @@ def paste_text_in_archiver_file():
     global paste_flag
     paste_flag = False
 
+    # TODO : before copy check that previous copied text is same or not
+
     # populate list to get data faster for paste
     clipboard_archive_data_list.append(read_clipboard_data())
     print("in copy : {}".format(clipboard_archive_data_list))

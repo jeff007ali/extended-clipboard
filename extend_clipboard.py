@@ -68,16 +68,18 @@ def paste_text_in_archiver_file():
     global paste_flag
     paste_flag = False
 
-    # TODO : before copy check that previous copied text is same or not
+    if len(clipboard_archive_data_list) > 0 and clipboard_archive_data_list[-1] == read_clipboard_data():
+        print("Duplicate found")
+        pass
+    else:
+        # populate list to get data faster for paste
+        clipboard_archive_data_list.append(read_clipboard_data())
+        print("in copy : {}".format(clipboard_archive_data_list))
 
-    # populate list to get data faster for paste
-    clipboard_archive_data_list.append(read_clipboard_data())
-    print("in copy : {}".format(clipboard_archive_data_list))
-
-    # logs clipboard data for history purpose
-    with open("clipboard_archiver_{}.txt".format(get_today_date()), "a") as arch_file:
-        arch_file.write(":end\n\nstart:")
-        arch_file.write(read_clipboard_data())
+        # logs clipboard data for history purpose
+        with open("clipboard_archiver_{}.txt".format(get_today_date()), "a") as arch_file:
+            arch_file.write(":end\n\nstart:")
+            arch_file.write(read_clipboard_data())
 
 def paste_text():
     global paste_flag

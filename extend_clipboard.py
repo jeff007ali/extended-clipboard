@@ -3,11 +3,14 @@ from pynput.keyboard import Controller, Key
 import pyperclip
 import time
 import datetime
+import pathlib
 
 kb = Controller()
 paste_flag = False
 index = float('inf')
-injected = False  
+injected = False
+relative_path = pathlib.Path(__file__).parent / 'archive'
+pathlib.Path(relative_path).mkdir(parents=True, exist_ok=True)
 
 def get_today_date():
     date = datetime.datetime.now()
@@ -15,14 +18,14 @@ def get_today_date():
 
 def get_clipboard_archive_data():
     try:
-        with open("clipboard_archiver_{}.txt".format(get_today_date()), "r") as arch_file:
+        with open("{}/clipboard_archiver_{}.txt".format(relative_path, get_today_date()), "r") as arch_file:
             arch_data = arch_file.read()
     except FileNotFoundError:
-        with open("clipboard_archiver_{}.txt".format(get_today_date()), "x") as arch_file:
+        with open("{}/clipboard_archiver_{}.txt".format(relative_path, get_today_date()), "x") as arch_file:
             arch_data = ''
     
     if arch_data:
-        return arch_data.split(':end\n\nstart:')
+        return arch_data.split(':end\n\nstart:')[1:]
     else:
         return list()
 
@@ -77,7 +80,7 @@ def paste_text_in_archiver_file():
         print("in copy : {}".format(clipboard_archive_data_list))
 
         # logs clipboard data for history purpose
-        with open("clipboard_archiver_{}.txt".format(get_today_date()), "a") as arch_file:
+        with open("{}/clipboard_archiver_{}.txt".format(relative_path, get_today_date()), "a") as arch_file:
             arch_file.write(":end\n\nstart:")
             arch_file.write(read_clipboard_data())
 
